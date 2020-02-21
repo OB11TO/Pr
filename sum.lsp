@@ -1,4 +1,5 @@
 ;#! /usr/bin/clisp
+;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
 ; -- Преобразовать результат в естественный вид
@@ -26,7 +27,7 @@
 
     (cond
         ((null l) nil)
-        ; one summand
+
         ((null (cdr l)) (math-summand (car l)))
         (t (append (math-summand (car l))
                 (cond
@@ -68,20 +69,25 @@
 
 (defun treatment (l)
     (pilot (list
-          (deletzero(retsult
+           (deletzero(retsult
                             (append
                               (operation (car l) (car(cdr(cdr(cdr l)))))
-                             (operation (car(cdr l)) (car(cdr(cdr l)))))))
-          (deletzero(retsult
-                            (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
+                              (operation (car(cdr l)) (car(cdr(cdr l)))))))
+           (deletzero(retsult
+                              (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
 
 (defun retsult (l) (varios l NIL NIL NIL))
-(defun operation (l1 l2)
+
+
+
+(defun operation (l1 l2) ;iZMEN
        (cond
             ((null l1) NIL)
             (T (append (mapcar (lambda (x) (list (* (caar l1) (car x))
                                                  (+ (cadar l1) (cadr x))))l2)
             (operation (cdr l1) l2)))))
+
+
 
 (defun deletzero (l)
     (cond
@@ -110,38 +116,36 @@
 
 
 (defun get-cars (l)
-(cond
-    ((null l) '())
-    (T (cons (caar l) (get-cars (cdr l))))))
+      (cond
+            ((null l) '())
+            (T (cons (caar l) (get-cars (cdr l))))))
 
 (defun get-pws (l)
-(cond
-    ((null l) '())
-    (T (cons (cadar l) (get-pws (cdr l))))))
+      (cond
+            ((null l) '())
+            (T (cons (cadar l) (get-pws (cdr l))))))
 
 (defun pilot (l) (output l)
-  (sokrash l (list (apply 'gcd (get-cars (append (car l) (cadr l))))
-                   (apply 'min (get-pws (append (car l) (cadr l))))
-)))
+  (sokrash l (list (apply 'gcd (get-cars (append (car l) (car(cdr l)))))
+                  (apply 'min (get-pws (append (car l) (car(cdr l))))))))
 
 
-
-(defun sokrash3 (l d)
-(sokrash3 l d '()))
 
 (defun sokrash (l d)
-(cond
-  ((null l) '())
-  (T (cons (refr (car l) d) (sokrash (cdr l) d )))))
+        (cond
+              ((null l) '())
+              (T (cons (refr (car l) d)
+                  (sokrash (cdr l) d)))))
 
 (defun refr (l d)
-(cond
-  ((null l) '())
-  (T ( cons (proc (car l) d) (refr (cdr l) d) ))))
+      (cond
+            ((null l) '())
+            (T (cons (proc (car l) d)
+                     (refr (cdr l) d)))))
 
 (defun proc (l d)
-(list (/ (car l) (car d))
-      (- (cadr l) (cadr d))))
+      (list (/ (car l) (car d))
+            (- (cadr l) (cadr d))))
 
 
 
@@ -186,7 +190,6 @@
         (T (preobraz (cons (append (car l) (list (cadr l))) (cddr l))))))
 
 
-
 (defun types (l)
       (cond
             ((null l) NIL)
@@ -195,27 +198,23 @@
       (cond
             ((numberp (car l)) (append l '(0)))  ; const
             (T '(1 1)))) ; x
-            ((null (cddr l))
+            ((null (cdr(cdr l)))
       (cond
-            ((and (eql '- (car l)) (numberp (cadr l)))   ; - const
-            (list (- 0 (cadr l)) 0))
+            ((and (eql '- (car l)) (numberp (car(cdr l))))   ; - const
+            (list (- 0 (car(cdr l))) 0))
              ((numberp (car l)) (cons (car l) '(1)))     ; const x
              (T '(-1 1))))      ; - x
-             ((null (cdddr l))
+             ((null (cdr(cdr(cdr l))))
       (cond
-             ((eql '- (car l)) (cons (- 0 (cadr l)) '(1)))  ; - const x
-             (T (cons '1 (cddr l)))))   ; x ^ const
-             ((null (cddddr l))
+             ((eql '- (car l)) (cons (- 0 (car(cdr l))) '(1)))  ; - const x
+             (T (cons '1 (cdr(cdr l))))))   ; x ^ const
+             ((null (cdr(cdr(cdr(cdr l)))))
       (cond
-             ((eql '- (car l)) (cons '-1 (cdddr l)))    ; - x ^ const
-             (T (cons (car l) (cdddr l))))) ; const x ^ const
-             ((null (cdr (cddddr l)))
-             (cons (- 0 (cadr l)) (cddddr l))) ; - const x ^ const
+             ((eql '- (car l)) (cons '-1 (cdr(cdr(cdr l)))))    ; - x ^ const
+             (T (cons (car l) (cdr(cdr(cdr l))))))) ; const x ^ const
+             ((null (cdr (cdr(cdr(cdr(cdr l))))))
+             (cons (- 0 (car(cdr l))) (cdr(cdr(cdr(cdr l)))))) ; - const x ^ const
         (T  NIL)))
-
-
-
-
 
 
 
@@ -280,27 +279,21 @@
 (defun main (l1 n l2)
         (output (treatment (input l1 n l2))))
 
-
-
-
-
-
-
-        (expression 1)
-        (expression 2)
-        (expression 3)
-        (expression 4)
-        (expression 5)
-        (expression 6)
-        (expression 7)
-        (expression 8)
-        (expression 9)
-        (expression 10)
-        (expression 11)
-        (expression 12)
-        (expression 13)
-        (expression 14)
-        (expression 15)
-        (expression 16)
-        (expression 17)
-        (expression 18)
+(expression 1)
+(expression 2)
+(expression 3)
+(expression 4)
+(expression 5)
+(expression 6)
+(expression 7)
+(expression 8)
+(expression 9)
+(expression 10)
+(expression 11)
+(expression 12)
+(expression 13)
+(expression 14)
+(expression 15)
+(expression 16)
+(expression 17)
+(expression 18)
