@@ -79,13 +79,21 @@
 (defun result (l) (varios l NIL NIL NIL))
 
 
+(defun operation (l1 l2)
+        (cond
+              ((null l1) '())
+              (T (append (provvir2 (car l1) l2)
+                  (operation (cdr l1) l2)))))
 
-(defun operation (l1 l2) ;iZMEN
-       (cond
-            ((null l1) NIL)
-            (T (append (mapcar (lambda (x) (list (* (caar l1) (car x))
-                                                 (+ (cadar l1) (cadr x))))l2)
-            (operation (cdr l1) l2)))))
+(defun provvir2 (l1 l2)
+      (cond
+            ((null l2) '())
+            (T (cons (prosum l1 (car l2))
+                     (provvir2 l1 (cdr l2))))))
+
+(defun prosum (l1 l2)
+      (list (* (car l1) (car l2))
+            (+ (car(cdr l1)) (car(cdr l2)))))
 
 
 
