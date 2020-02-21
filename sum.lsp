@@ -1,4 +1,4 @@
-;#! /usr/bin/clisp
+#! /usr/bin/clisp
 ;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
@@ -68,15 +68,15 @@
 ;////////////treatment//////////////////////////////
 
 (defun treatment (l)
-    (pilot (list
-           (deletzero(retsult
+    (obsdelete (list
+           (provzero(result
                             (append
                               (operation (car l) (car(cdr(cdr(cdr l)))))
                               (operation (car(cdr l)) (car(cdr(cdr l)))))))
-           (deletzero(retsult
+           (provzero(result
                               (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
 
-(defun retsult (l) (varios l NIL NIL NIL))
+(defun result (l) (varios l NIL NIL NIL))
 
 
 
@@ -89,11 +89,11 @@
 
 
 
-(defun deletzero (l)
+(defun provzero (l)
     (cond
         ((null l) NIL)
-        ((= (car(car l)) 0) (deletzero(retsult (cdr l))))
-        (T (cons (car l) (deletzero(retsult (cdr l)))))))
+        ((= (car(car l)) 0) (provzero(result (cdr l))))
+        (T (cons (car l) (provzero(result (cdr l)))))))
 
 
 (defun varios (l auxiliary support control)
@@ -115,37 +115,37 @@
       (T (varios (cdr l) auxiliary support (cons (car l) control)))))
 
 
-(defun get-cars (l)
+(defun getcar (l)
       (cond
             ((null l) '())
-            (T (cons (caar l) (get-cars (cdr l))))))
+            (T (cons (car(car l)) (getcar (cdr l))))))
 
-(defun get-pws (l)
+(defun getcdr (l)
       (cond
             ((null l) '())
-            (T (cons (cadar l) (get-pws (cdr l))))))
+            (T (cons (car(cdr(car l))) (getcdr (cdr l))))))
 
-(defun pilot (l) (output l)
-  (sokrash l (list (apply 'gcd (get-cars (append (car l) (car(cdr l)))))
-                  (apply 'min (get-pws (append (car l) (car(cdr l))))))))
+(defun obsdelete (l) (output l)
+  (sokrash l (list (apply 'gcd (getcar (append (car l) (car(cdr l)))))
+                  (apply 'min (getcdr (append (car l) (car(cdr l))))))))
 
 
 
 (defun sokrash (l d)
         (cond
               ((null l) '())
-              (T (cons (refr (car l) d)
+              (T (cons (provvir (car l) d)
                   (sokrash (cdr l) d)))))
 
-(defun refr (l d)
+(defun provvir (l d)
       (cond
             ((null l) '())
-            (T (cons (proc (car l) d)
-                     (refr (cdr l) d)))))
+            (T (cons (prosedur (car l) d)
+                     (provvir (cdr l) d)))))
 
-(defun proc (l d)
+(defun prosedur (l d)
       (list (/ (car l) (car d))
-            (- (cadr l) (cadr d))))
+            (- (car(cdr l)) (car(cdr d)))))
 
 
 
