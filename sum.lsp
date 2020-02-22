@@ -5,7 +5,7 @@
 (defun output (l)
     (cond
         ((null (car l)) (print 0))
-        ((null (cadr l))  (res (vid (car l)) '/\  '(1) ))
+        ((null (cadr l))  (res2 (vid (car l))))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
 
 (defun vid (l)
@@ -27,6 +27,8 @@
    (cond
         ((null (cdr l2)) (princ (car l2)))
         (T (princ l2))))
+(defun res2 (l1)
+        (print l1))
 
 
 (defun typec (l)
@@ -275,6 +277,9 @@
                 (main (print '(7 + 15 - 3 X / X)) (princ '+\ )
                 (princ '(X / 5 X ^ 8))))
 
+      (( = n 20)
+                (main (print '(7 + 15 - 3 X / 0)) (princ '+\ )
+                (princ '(0 / 1 ))))
       (T "Error expression")))
 
 (defun expressions (n)
@@ -282,6 +287,9 @@
 
 (defun main (l1 n l2)
         (output (treatment (input l1 n l2))))
+
+
+;(trace provzero vid res typec output input treatment sokrash obsdelete)
 
 (expression 1)
 (expression 2)
@@ -302,3 +310,4 @@
 (expression 17)
 (expression 18)
 (expression 19)
+(expression 20)
