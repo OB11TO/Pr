@@ -2,60 +2,54 @@
 ;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
-; -- Преобразовать результат в естественный вид
 (defun output (l)
     (cond
-        ; expression = 0
         ((null (car l)) (print 0))
-        (t (prin3 (math-view (car l)) '/\  (math-view (cadr l))))))
+        ;((== NIL (cdr l))  (res (math-view (car l))))
+        (T (res (vid (car l)) '/\  (vid (cadr l))))))
 
-
-
-; -- Печать 3 элементов
-(defun prin3 (x y z)
+(defun res (l1 d l2)
     (cond
-        ((null (cdr x)) (print (car x)))
-        (t (print x)))
-    (princ y)
+        ((null (cdr l1)) (print (car l1)))
+        (T (print l1)))
+    (princ d)
    (cond
-        ((null (cdr z)) (princ (car z)))
-        (t (princ z))))
+        ((null (cdr l2)) (princ (car l2)))
+        (T (princ l2))))
 
-; -- Преобразовать выражение из внутреннего представления
-; -- к естественному виду
-(defun math-view (l)
 
-    (cond
-        ((null l) nil)
+(defun vid (l)
+  (cond
+    ((null l) nil)
+    ((null (cdr l)) (typec (car l)))
+    (t (append (typec (car l))
+        (cond
+            ((> (caadr l) 0) (cons '+ (vid (cdr l))))
+          (t (cons '- (vid (cons (cons (- 0 (caadr l))
+                                                  (cdadr l))
+                                                  (cddr l))))))))))
 
-        ((null (cdr l)) (math-summand (car l)))
-        (t (append (math-summand (car l))
-                (cond
-                    ((> (caadr l) 0) (cons '+ (math-view (cdr l))))
-                    (t (cons '- (math-view (cons (cons (- 0 (caadr l))
-                                                       (cdadr l))
-                                                 (cddr l))))))))))
 
-;--; -- Преобразовать команду из внутреннего представления
-; -- к естественному виду
-(defun math-summand (l)
-    (cond
-        ; const
-        ((= 0 (cadr l)) (list (car l)))
-        ((= 1 (cadr l))
-            (cond
-                ; x
-                ((= 1 (car l)) (list 'x))
-                ; - x
-                ((= -1 (car l)) (list '- 'x))
-                ; const x
-                (t (list (car l) 'x))))
-        ; x ^ const
-        ((= 1 (car l)) (list 'x '^ (cadr l)))
-        ; - x ^ const
-        ((= -1 (car l)) (list '- 'x '^ (cadr l)))
-        ; const x ^ const
-        (t (list (car l) 'x '^ (cadr l)))))
+
+(defun typec (l)
+        (cond
+              ((= 0 (cadr l)) (list (car l)))
+              (T (typex l))))
+
+(defun typex (l)
+        (cond
+              ((= 1 (cadr l))
+              (cond
+                  ((= 1 (car l)) (list 'x))
+                  ((= -1 (car l)) (list '- 'x))
+                  (t (list (car l) 'x))))
+        (T (typecx l))))
+
+(defun typecx (l)
+        (cond
+          ((= 1 (car l)) (list 'x '^ (cadr l)))
+          ((= -1 (car l)) (list '- 'x '^ (cadr l)))
+          (t (list (car l) 'x '^ (cadr l)))))
 
 
 
@@ -279,6 +273,10 @@
       (( = n 18)
                (main (print '(x ^ 2 + x / x + 1)) (princ '+\ )
                (princ '( 1 ))))
+      (( = n 19)
+                (main (print '(7 + 15 - 3 X / X)) (princ '+\ )
+                (princ '(X / 5 X ^ 8))))
+
       (T "Error expression")))
 
 (defun expressions (n)
@@ -305,3 +303,4 @@
 (expression 16)
 (expression 17)
 (expression 18)
+(expression 19)
