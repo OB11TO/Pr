@@ -5,18 +5,8 @@
 (defun output (l)
     (cond
         ((null (car l)) (print 0))
-        ;((== NIL (cdr l))  (res (math-view (car l))))
+        ((null (cadr l))  (res (vid (car l)) '/\  '(1) ))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
-
-(defun res (l1 d l2)
-    (cond
-        ((null (cdr l1)) (print (car l1)))
-        (T (print l1)))
-    (princ d)
-   (cond
-        ((null (cdr l2)) (princ (car l2)))
-        (T (princ l2))))
-
 
 (defun vid (l)
   (cond
@@ -29,6 +19,14 @@
                                                   (cdadr l))
                                                   (cddr l))))))))))
 
+(defun res (l1 d l2)
+    (cond
+        ((null (cdr l1)) (print (car l1)))
+        (T (print l1)))
+    (princ d)
+   (cond
+        ((null (cdr l2)) (princ (car l2)))
+        (T (princ l2))))
 
 
 (defun typec (l)
