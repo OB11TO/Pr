@@ -27,7 +27,9 @@
    (cond
         ((null (cdr l2)) (princ (car l2)))
         (T (princ l2))))
+
 (defun res2 (l1)
+      ;  ((null (cdr l1)) (print (car l1)))
         (print l1))
 
 
@@ -194,12 +196,13 @@
 
 (defun types (l)
       (cond
-            ((null l) NIL)
-            ((eql '+ (car l)) (types (cdr l)))
-            ((null (cdr l))
-      (cond
-            ((numberp (car l)) (append l '(0)))  ; const
-            (T '(1 1)))) ; x
+        ((null l) NIL)
+        ((eql '+ (car l)) (types (cdr l)))
+
+        ((null (cdr l))
+            (cond
+                ((numberp (car l)) (append l '(0)))  ; const
+                (T '(1 1)))) ; x
             ((null (cdr(cdr l)))
       (cond
             ((and (eql '- (car l)) (numberp (car(cdr l))))   ; - const
@@ -217,6 +220,14 @@
              ((null (cdr (cdr(cdr(cdr(cdr l))))))
              (cons (- 0 (car(cdr l))) (cdr(cdr(cdr(cdr l)))))) ; - const x ^ const
         (T  NIL)))
+(defun types2 (l)
+(cond
+      ((null l) NIL)
+      ((eql '+ (car l)) (types (cdr l)))
+      ((null (cdr l))
+      (cond
+            ((numberp (car l)) (append l '(0)))  ; const
+            (T '(1 1))))))
 
 
 
@@ -278,8 +289,8 @@
                 (princ '(X / 5 X ^ 8))))
 
       (( = n 20)
-                (main (print '(7 + 15 - 3 X / 0)) (princ '+\ )
-                (princ '(0 / 1 ))))
+                (main (print '(7 + 15 - 3 X / 1)) (princ '+\ )
+                (princ '(2 / 2 ))))
       (T "Error expression")))
 
 (defun expressions (n)
@@ -287,6 +298,7 @@
 
 (defun main (l1 n l2)
         (output (treatment (input l1 n l2))))
+
 
 
 ;(trace provzero vid res typec output input treatment sokrash obsdelete)
