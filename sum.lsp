@@ -220,14 +220,7 @@
              ((null (cdr (cdr(cdr(cdr(cdr l))))))
              (cons (- 0 (car(cdr l))) (cdr(cdr(cdr(cdr l)))))) ; - const x ^ const
         (T  NIL)))
-(defun types2 (l)
-(cond
-      ((null l) NIL)
-      ((eql '+ (car l)) (types (cdr l)))
-      ((null (cdr l))
-      (cond
-            ((numberp (car l)) (append l '(0)))  ; const
-            (T '(1 1))))))
+
 
 
 
