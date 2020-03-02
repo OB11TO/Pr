@@ -98,26 +98,7 @@
         ((null l) NIL)
         ((= (car(car l)) 0) (provzero(result (cdr l))))
         (T (cons (car l) (provzero(result (cdr l)))))))
-
-
-(defun varios (l auxiliary support control)
-    (cond
-          ((null l)
-    (cond
-          ((null control)
-            (cond
-               ((null auxiliary) support)
-               (T (cons auxiliary support))))
-
-          ((null auxiliary) (varios (cdr control) (car control) support NIL))
-          (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
-
-       ((null auxiliary) (varios (cdr l) (car l) support control))
-            ((= (cadar l) (cadr auxiliary)) (varios (cdr l)
-             (cons (+ (car auxiliary) (caar l)) (cdr auxiliary)) support control))
-
-      (T (varios (cdr l) auxiliary support (cons (car l) control)))))
-
+;///////////////varios
 
 (defun getcar (l)
       (cond
@@ -286,5 +267,21 @@
       (princ '(2 / 2 )))
 
 
+      (defun varios (l auxiliary support control)
+          (cond
+                ((null l)
+          (cond
+                ((null control)
+                  (cond
+                     ((null auxiliary) support)
+                     (T (cons auxiliary support))))
 
+                ((null auxiliary) (varios (cdr control) (car control) support NIL))
+                (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
+
+             ((null auxiliary) (varios (cdr l) (car l) support control))
+                  ((= (cadar l) (cadr auxiliary)) (varios (cdr l)
+                   (cons (+ (car auxiliary) (caar l)) (cdr auxiliary)) support control))
+
+            (T (varios (cdr l) auxiliary support (cons (car l) control)))))
 ;(trace provzero vid res typec output input treatment sokrash obsdelete)
