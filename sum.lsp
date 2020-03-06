@@ -193,11 +193,7 @@
         (T (preobraz (cons (append (car l) (list (cadr l))) (cddr l))))))
 
 
-<<<<<<< HEAD
-(defun types (l)  ;/////
-=======
 (defun types (l)
->>>>>>> e8f73a66f9e1dc2ada2e8f915e9eaa440384872e
       (cond
         ((null l) NIL)
         ((eql '+ (car l)) (types (cdr l)))
@@ -232,13 +228,10 @@
         (output (treatment (input l1 d l2))))
 
 (print '(EXPRESION 1))
-<<<<<<< HEAD
 (main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
       (princ '((X ^ 5 - 3 x ^ 4 + 12 x ^ 3 - 100 x ^ 1 + 0) / (5 X ^ 8 - x))))
-=======
 (main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
       (princ '((X ^ 5 - 3 x ^ 4 + 12 x ^ 3 - 100 x ^ 1 + 0) / (5 X ^ 8 - x))))
->>>>>>> e8f73a66f9e1dc2ada2e8f915e9eaa440384872e
 (print '(EXPRESION 2))
 (main (print '((3 + x - 2 - x + 3 x) / (- 5 x + x ^ 2)))
       (princ '+\ ) (princ '((- x ^ 4 + 12 x ^ 10) / (- 4 x ^ 3))))
@@ -292,27 +285,5 @@
 (print '(EXPRESION 19))
 (main (print '(7 + 15 - 3 X / 1)) (princ '+\ )
       (princ '(2 / 2 )))
-<<<<<<< HEAD
 
-=======
-
-
-      (defun varios (l auxiliary support control)
-          (cond
-                ((null l)
-          (cond
-                ((null control)
-                  (cond
-                     ((null auxiliary) support)
-                     (T (cons auxiliary support))))
-
-                ((null auxiliary) (varios (cdr control) (car control) support NIL))
-                (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
-
-             ((null auxiliary) (varios (cdr l) (car l) support control))
-                  ((= (cadar l) (cadr auxiliary)) (varios (cdr l)
-                   (cons (+ (car auxiliary) (caar l)) (cdr auxiliary)) support control))
-
-            (T (varios (cdr l) auxiliary support (cons (car l) control)))))
->>>>>>> e8f73a66f9e1dc2ada2e8f915e9eaa440384872e
 ;(trace provzero vid res typec output input treatment sokrash obsdelete)
