@@ -8,7 +8,7 @@
         ((null (cadr l))  (res2 (vid (car l))))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
 
-(defun vid (l)
+(defun vid (l)  ;///
   (cond
     ((null l) nil)
     ((null (cdr l)) (typec (car l)))
@@ -27,7 +27,9 @@
    (cond
         ((null (cdr l2)) (princ (car l2)))
         (T (princ l2))))
+
 (defun res2 (l1)
+      ;  ((null (cdr l1)) (print (car l1)))
         (print l1))
 
 
@@ -96,26 +98,7 @@
         ((null l) NIL)
         ((= (car(car l)) 0) (provzero(result (cdr l))))
         (T (cons (car l) (provzero(result (cdr l)))))))
-
-
-(defun varios (l auxiliary support control)
-    (cond
-          ((null l)
-    (cond
-          ((null control)
-            (cond
-               ((null auxiliary) support)
-               (T (cons auxiliary support))))
-
-          ((null auxiliary) (varios (cdr control) (car control) support NIL))
-          (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
-
-       ((null auxiliary) (varios (cdr l) (car l) support control))
-            ((= (cadar l) (cadr auxiliary)) (varios (cdr l)
-             (cons (+ (car auxiliary) (caar l)) (cdr auxiliary)) support control))
-
-      (T (varios (cdr l) auxiliary support (cons (car l) control)))))
-
+;///////////////varios
 
 (defun getcar (l)
       (cond
@@ -150,6 +133,23 @@
             (- (car(cdr l)) (car(cdr d)))))
 
 
+(defun varios (l auxiliary support control) ;/////
+    (cond
+          ((null l)
+    (cond
+          ((null control)
+            (cond
+               ((null auxiliary) support)
+               (T (cons auxiliary support))))
+
+          ((null auxiliary) (varios (cdr control) (car control) support NIL))
+          (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
+
+       ((null auxiliary) (varios (cdr l) (car l) support control))
+            ((= (cadar l) (cadr auxiliary)) (varios (cdr l)
+             (cons (+ (car auxiliary) (caar l)) (cdr auxiliary)) support control))
+
+      (T (varios (cdr l) auxiliary support (cons (car l) control)))))
 
 
 
@@ -159,7 +159,7 @@
 
 ;////////////////////////INPUT//////////////////////////////
 
-(defun input (l1 n l2)
+(defun input (l1 d l2)
         (list (preobraz (car (list (take l1) '/ (drop l1))))
               (preobraz (car(cdr(cdr (list (take l1) '/ (drop l1))))))
               (preobraz (car (list (take l2) '/ (drop l2))))
@@ -192,14 +192,15 @@
         (T (preobraz (cons (append (car l) (list (cadr l))) (cddr l))))))
 
 
-(defun types (l)
+(defun types (l)  ;/////
       (cond
-            ((null l) NIL)
-            ((eql '+ (car l)) (types (cdr l)))
-            ((null (cdr l))
-      (cond
-            ((numberp (car l)) (append l '(0)))  ; const
-            (T '(1 1)))) ; x
+        ((null l) NIL)
+        ((eql '+ (car l)) (types (cdr l)))
+
+        ((null (cdr l))
+            (cond
+                ((numberp (car l)) (append l '(0)))  ; const
+                (T '(1 1)))) ; x
             ((null (cdr(cdr l)))
       (cond
             ((and (eql '- (car l)) (numberp (car(cdr l))))   ; - const
@@ -221,93 +222,65 @@
 
 
 
-(defun expression (n) (expressions n)
-    (cond
-      ((= n 1)
-            (main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
-            (princ '((X ^ 5 - 3 x ^ 4 + 12 x ^ 3 - 100 x ^ 1 + 0) / (5 X ^ 8 - x)))))
-      ((= n 2)
-            (main (print '((3 + x - 2 - x + 3 x) / (- 5 x + x ^ 2)))
-            (princ '+\ ) (princ '((- x ^ 4 + 12 x ^ 10) / (- 4 x ^ 3)))))
-      ((= n 3)
-              (main (print '((x + 1) / x)) (princ '+\ )
-              (princ '((x - 1) / (x ^ 2)))))
-      ((= n 5)
-              (main (print '(1 / 3)) (princ '+\ ) (princ '(-1 / 6))))
-      ((= n 6)
-              (main (print '((x ^ 2 - 2 x + 3) / (x - 4))) (princ '+\ )
-              (princ '((x ^ 3) / (x ^ 2 - 5 x + 2)))))
-      ((= n 7)
-              (main (print '(x / 3)) (princ '+\ ) (princ '((-2 x) / 6))))
-      ((= n 8)
-              (main (print '(x / (3 x ^ 2))) (princ '+\ )
-              (princ '((2 x) / (6 x ^ 2)))))
-      ((= n 9)
-              (main (print '((x ^ 2 + 2 x) / 3)) (princ '+\ )
-              (princ '((- x ^ 2 - 2 x + 1) / 3))))
 
-      ((= n 10)
-               (main (print '((2 x + 5) / (4 x ^ 2 + 10 x + 25))) (princ '+\ )
-               (princ '((- 2 x + 5) / (4 x ^ 2 - 10 x + 25)))))
-      ((= n 11)
-               (main (print '((x - 1) / (x + 1))) (princ '+\ )
-               (princ '((x + 1) / (x - 1)))))
-      ((= n 12)
-               (main (print '((x ^ 2 - x) / (x ^ 2 + x)))
-               (princ '+\ ) (princ '((x + 1) / (x - 1)))))
-      ((= n 13)
-              (main (print '((x ^ 2 + 2 x + 1) / (x + 1))) (princ '+\ )
-              (princ '((2 - x - 3) / 1))))
-      ((= n 14)
-              (main (print '(1 / (x ^ 2 - 2 x + 2))) (princ '+\ )
-              (princ '(1 / (x ^ 2 + 2 x + 2)))))
-      ((= n 15)
-              (main (print '(3 / (x ^ 2 + 1))) (princ '+\ )
-              (princ '((2 + 7 x - 5 - 7 x) / (x ^ 2 + 1)))))
-      ((= n 16)
-               (main (print '((x + 1) / (x + 1))) (princ '+\ )
-               (princ '((x - 1) / (x - 1)))))
-      ((= n 17)
-               (main (print '(x ^ 2 + x / x ^ 2 - x)) (princ '+\ )
-               (princ '(1 - x / x + 1))))
-      (( = n 18)
-               (main (print '(x ^ 2 + x / x + 1)) (princ '+\ )
-               (princ '( 1 ))))
-      (( = n 19)
-                (main (print '(7 + 15 - 3 X / X)) (princ '+\ )
-                (princ '(X / 5 X ^ 8))))
+(defun main (l1 d l2)
+        (output (treatment (input l1 d l2))))
 
-      (( = n 20)
-                (main (print '(7 + 15 - 3 X / 0)) (princ '+\ )
-                (princ '(0 / 1 ))))
-      (T "Error expression")))
-
-(defun expressions (n)
-    (print 'expression) (princ n))
-
-(defun main (l1 n l2)
-        (output (treatment (input l1 n l2))))
-
+(print '(EXPRESION 1))
+(main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
+      (princ '((X ^ 5 - 3 x ^ 4 + 12 x ^ 3 - 100 x ^ 1 + 0) / (5 X ^ 8 - x))))
+(print '(EXPRESION 2))
+(main (print '((3 + x - 2 - x + 3 x) / (- 5 x + x ^ 2)))
+      (princ '+\ ) (princ '((- x ^ 4 + 12 x ^ 10) / (- 4 x ^ 3))))
+(print '(EXPRESION 3))
+(main (print '((x + 1) / x)) (princ '+\ )
+      (princ '((x - 1) / (x ^ 2))))
+(print '(EXPRESION 4))
+(main (print '(1 / 3)) (princ '+\ ) (princ '(-1 / 6)))
+(print '(EXPRESION 5))
+(main (print '((x ^ 2 - 2 x + 3) / (x - 4))) (princ '+\ )
+      (princ '((x ^ 3) / (x ^ 2 - 5 x + 2))))
+(print '(EXPRESION 6))
+(main (print '(x / 3)) (princ '+\ )
+      (princ '((-2 x) / 6)))
+(print '(EXPRESION 7))
+(main (print '(x / (3 x ^ 2))) (princ '+\ )
+      (princ '((2 x) / (6 x ^ 2))))
+(print '(EXPRESION 8))
+(main (print '((x ^ 2 + 2 x) / 3)) (princ '+\ )
+      (princ '((- x ^ 2 - 2 x + 1) / 3)))
+(print '(EXPRESION 9))
+(main (print '((2 x + 5) / (4 x ^ 2 + 10 x + 25))) (princ '+\ )
+      (princ '((- 2 x + 5) / (4 x ^ 2 - 10 x + 25))))
+(print '(EXPRESION 10))
+(main (print '((x - 1) / (x + 1))) (princ '+\ )
+      (princ '((x + 1) / (x - 1))))
+(print '(EXPRESION 11))
+(main (print '((x ^ 2 - x) / (x ^ 2 + x)))
+      (princ '+\ ) (princ '((x + 1) / (x - 1))))
+(print '(EXPRESION 12))
+(main (print '((x ^ 2 + 2 x + 1) / (x + 1))) (princ '+\ )
+      (princ '((2 - x - 3) / 1)))
+(print '(EXPRESION 13))
+(main (print '(1 / (x ^ 2 - 2 x + 2))) (princ '+\ )
+      (princ '(1 / (x ^ 2 + 2 x + 2))))
+(print '(EXPRESION 14))
+(main (print '(3 / (x ^ 2 + 1))) (princ '+\ )
+      (princ '((2 + 7 x - 5 - 7 x) / (x ^ 2 + 1))))
+(print '(EXPRESION 15))
+(main (print '((x + 1) / (x + 1))) (princ '+\ )
+      (princ '((x - 1) / (x - 1))))
+(print '(EXPRESION 16))
+(main (print '(x ^ 2 + x / x ^ 2 - x)) (princ '+\ )
+      (princ '(1 - x / x + 1)))
+(print '(EXPRESION 17))
+(main (print '(x ^ 2 + x / x + 1)) (princ '+\ )
+      (princ '( 1 )))
+(print '(EXPRESION 18))
+(main (print '(7 + 15 - 3 X / X)) (princ '+\ )
+      (princ '(X / 5 X ^ 8)))
+(print '(EXPRESION 19))
+(main (print '(7 + 15 - 3 X / 1)) (princ '+\ )
+      (princ '(2 / 2 )))
 
 ;(trace provzero vid res typec output input treatment sokrash obsdelete)
-
-(expression 1)
-(expression 2)
-(expression 3)
-(expression 4)
-(expression 5)
-(expression 6)
-(expression 7)
-(expression 8)
-(expression 9)
-(expression 10)
-(expression 11)
-(expression 12)
-(expression 13)
-(expression 14)
-(expression 15)
-(expression 16)
-(expression 17)
-(expression 18)
-(expression 19)
-(expression 20)
