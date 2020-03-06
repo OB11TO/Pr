@@ -2,6 +2,7 @@
 ;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
+
 (defun output (l)
     (cond
         ((null (car l)) (print 0))
