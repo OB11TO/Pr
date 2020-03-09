@@ -7,6 +7,7 @@
     (cond
         ((null (car l)) (print 0))
         ((null (cadr l))  (res2 (vid (car l))))
+    ;    ( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
 
 (defun vid (l)  ;///
@@ -230,8 +231,6 @@
 (print '(EXPRESION 1))
 (main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
       (princ '((X ^ 5 - 3 x ^ 4 + 12 x ^ 3 - 100 x ^ 1 + 0) / (5 X ^ 8 - x))))
-(main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
-      (princ '((X ^ 5 - 3 x ^ 4 + 12 x ^ 3 - 100 x ^ 1 + 0) / (5 X ^ 8 - x))))
 (print '(EXPRESION 2))
 (main (print '((3 + x - 2 - x + 3 x) / (- 5 x + x ^ 2)))
       (princ '+\ ) (princ '((- x ^ 4 + 12 x ^ 10) / (- 4 x ^ 3))))
@@ -286,4 +285,4 @@
 (main (print '(7 + 15 - 3 X / 1)) (princ '+\ )
       (princ '(2 / 2 )))
 
-;(trace provzero vid res typec output input treatment sokrash obsdelete)
+;(trace provzero vid res res2 typec output input treatment sokrash obsdelete)
