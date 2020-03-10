@@ -6,20 +6,21 @@
 (defun output (l)
     (cond
         ((null (car l)) (print 0))
-        ((null (cadr l))  (res2 (vid (car l))))
-    ;    ( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
+        ((null (car(cdr l)))  (res2 (vid (car l))))
+        ;((= 1 (caaadr l)) (res2 (vid(car l) (output (cdr l )))))
+    ;   ( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
 
 (defun vid (l)  ;///
   (cond
-    ((null l) nil)
-    ((null (cdr l)) (typec (car l)))
-    (t (append (typec (car l))
-        (cond
-            ((> (caadr l) 0) (cons '+ (vid (cdr l))))
-          (t (cons '- (vid (cons (cons (- 0 (caadr l))
-                                                  (cdadr l))
-                                                  (cddr l))))))))))
+        ((null l) nil)
+        ((null (cdr l)) (typec (car l)))
+        (T (append (typec (car l))
+                  (cond
+                      ((> (caadr l) 0) (cons '+ (vid (cdr l))))
+                      (T (cons '- (vid (cons (cons (- 0 (caadr l))
+                                                        (cdadr l))
+                                                        (cddr l))))))))))
 
 (defun res (l1 d l2)
     (cond
@@ -196,31 +197,39 @@
 
 (defun types (l)
       (cond
-        ((null l) NIL)
-        ((eql '+ (car l)) (types (cdr l)))
+            ((null l) NIL)
+            ((eql '+ (car l)) (types (cdr l)))
+            ((null (cdr l)) (types1 l))
+            ((null (cdr(cdr l))) (types2 l))
+            ((null (cdr(cdr(cdr l)))) (types3 l))
+            ((null (cdr(cdr(cdr(cdr l))))) (types4 l))
+            ((null (cdr(cdr(cdr(cdr(cdr l)))))) (types5 l))
+    (T NIL)))
 
-        ((null (cdr l))
-            (cond
-                ((numberp (car l)) (append l '(0)))  ; const
-                (T '(1 1)))) ; x
-            ((null (cdr(cdr l)))
-      (cond
+(defun types1 (l)
+        (cond
+            ((numberp (car l)) (append l '(0)))  ; const
+            (T '(1 1)))) ;x
+
+(defun types2 (l)
+        (cond
             ((and (eql '- (car l)) (numberp (car(cdr l))))   ; - const
             (list (- 0 (car(cdr l))) 0))
              ((numberp (car l)) (cons (car l) '(1)))     ; const x
              (T '(-1 1))))      ; - x
-             ((null (cdr(cdr(cdr l))))
-      (cond
-             ((eql '- (car l)) (cons (- 0 (car(cdr l))) '(1)))  ; - const x
-             (T (cons '1 (cdr(cdr l))))))   ; x ^ const
-             ((null (cdr(cdr(cdr(cdr l)))))
-      (cond
-             ((eql '- (car l)) (cons '-1 (cdr(cdr(cdr l)))))    ; - x ^ const
-             (T (cons (car l) (cdr(cdr(cdr l))))))) ; const x ^ const
-             ((null (cdr (cdr(cdr(cdr(cdr l))))))
-             (cons (- 0 (car(cdr l))) (cdr(cdr(cdr(cdr l)))))) ; - const x ^ const
-        (T  NIL)))
 
+(defun types3 (l)
+        (cond
+            ((eql '- (car l)) (cons (- 0 (car(cdr l))) '(1)))  ; - const x
+            (T (cons '1 (cdr(cdr l))))))   ; x ^ const
+
+(defun types4 (l)
+        (cond
+            ((eql '- (car l)) (cons '-1 (cdr(cdr(cdr l)))))    ; - x ^ const
+            (T (cons (car l) (cdr(cdr(cdr l))))))) ; const x ^ const
+
+(defun types5 (l)
+          (cons (- 0 (car(cdr l))) (cdr(cdr(cdr(cdr l)))))) ;- const x ^ const
 
 
 
@@ -277,12 +286,16 @@
       (princ '(1 - x / x + 1)))
 (print '(EXPRESION 17))
 (main (print '(x ^ 2 + x / x + 1)) (princ '+\ )
-      (princ '( 1 )))
+      (princ '(1 / 1 )))
 (print '(EXPRESION 18))
-(main (print '(7 + 15 - 3 X / X)) (princ '+\ )
-      (princ '(X / 5 X ^ 8)))
+(main (print '(7 + 15 - 3 x / x)) (princ '+\ )
+      (princ '(x / 5 x ^ 8)))
 (print '(EXPRESION 19))
-(main (print '(7 + 15 - 3 X / 1)) (princ '+\ )
+(main (print '(7 + 15 - 3 x / 1)) (princ '+\ )
       (princ '(2 / 2 )))
+
+(print '(EXPRESION 20))
+(main (print '(7 + 15 - 3 x / 1)) (princ '+\ )
+      (princ '( x / 2  )))
 
 ;(trace provzero vid res res2 typec output input treatment sokrash obsdelete)
