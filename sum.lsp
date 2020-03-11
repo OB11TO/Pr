@@ -3,6 +3,7 @@
 ;////////////////////ouitput///////////////////
 
 
+
 (defun output (l)
     (cond
         ((null (car l)) (print 0))
