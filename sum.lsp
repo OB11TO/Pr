@@ -4,13 +4,18 @@
 
 
 
-(defun output (l)
+(defun output_full (l)
     (cond
         ((null (car l)) (print 0))
         ((null (car(cdr l)))  (res2 (vid (car l))))
         ;((= 1 (caaadr l)) (res2 (vid(car l) (output (cdr l )))))
-    ;   ( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
+        ;( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
+;
+(defun output_2 (l)
+        (res (vid (car l)) '/\ (vid (car(cdr l)))))
+(defun output_1 (l)
+        (res (vid (car(cdr(cdr l)))) '/\ (vid (car(cdr(cdr(cdr l)))))))
 
 (defun vid (l)  ;///
   (cond
@@ -22,6 +27,18 @@
                       (T (cons '- (vid (cons (cons (- 0 (caadr l))
                                                         (cdadr l))
                                                         (cddr l))))))))))
+
+
+
+
+
+
+
+
+
+
+
+
 
 (defun res (l1 d l2)
     (cond
@@ -70,7 +87,7 @@
 (defun treatment (l)
     (obsdelete (list
            (provzero(result
-                            (append
+                          (append
                               (operation (car l) (car(cdr(cdr(cdr l)))))
                               (operation (car(cdr l)) (car(cdr(cdr l)))))))
            (provzero(result
@@ -114,9 +131,9 @@
             ((null l) '())
             (T (cons (car(cdr(car l))) (getcdr (cdr l))))))
 
-(defun obsdelete (l) (output l)
-  (sokrash l (list (apply 'gcd (getcar (append (car l) (car(cdr l)))))
-                  (apply 'min (getcdr (append (car l) (car(cdr l))))))))
+(defun obsdelete (l) (output_full l)
+  (output_full (sokrash l (list (apply 'gcd (getcar (append (car l) (car(cdr l)))))
+                  (apply 'min (getcdr (append (car l) (car(cdr l)))))))))
 
 
 
@@ -156,6 +173,12 @@
       (T (varios (cdr l) auxiliary support (cons (car l) control)))))
 
 
+
+(defun proverkanull (l)
+      (cond
+            ((= 0 (car(car(car l)))) (output_1 l))
+            ((= 0 (car(car(car(cdr(cdr l)))))) (output_2 l))
+            (T (treatment l))))
 
 
 
@@ -234,9 +257,8 @@
 
 
 
-
 (defun main (l1 d l2)
-        (output (treatment (input l1 d l2))))
+         (proverkanull (input l1 d l2)))
 
 (print '(EXPRESION 1))
 (main (print '((7 + 15 - 3 X) / (2 X ^ 3 + 3 x ^ 2))) (princ '+\ )
@@ -294,9 +316,14 @@
 (print '(EXPRESION 19))
 (main (print '(7 + 15 - 3 x / 1)) (princ '+\ )
       (princ '(2 / 2 )))
-
 (print '(EXPRESION 20))
 (main (print '(7 + 15 - 3 x / 1)) (princ '+\ )
+      (princ '( x / 2  )))
+(print '(EXPRESION 21))
+(main (print '(15 - 3 x / 1)) (princ '+\ )
+      (princ '( 0 / 2  )))
+(print '(EXPRESION 22))
+(main (print '(0 / 1)) (princ '+\ )
       (princ '( x / 2  )))
 
 ;(trace provzero vid res res2 typec output input treatment sokrash obsdelete)
