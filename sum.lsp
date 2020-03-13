@@ -28,20 +28,12 @@
             (T (cons '- (vid (cons (cons (- 0 (caadr l)) (cdadr l)) (cddr l)))))))
 
 
-
-
-
 (defun res (l1 d l2)
-    (cond
-        ((null (cdr l1)) (print (car l1)))
-        (T (print l1)))
-    (princ d)
-   (cond
-        ((null (cdr l2)) (princ (car l2)))
-        (T (princ l2))))
+      (print l1)
+      (princ d)
+      (princ l2))
 
 (defun res2 (l1)
-      ;  ((null (cdr l1)) (print (car l1)))
         (print l1))
 
 
