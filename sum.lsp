@@ -2,7 +2,7 @@
 ;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
-
+;(trace vid input obrabotka)
 
 (defun output_full (l)
     (cond
@@ -11,30 +11,21 @@
         ;((= 1 (caaadr l)) (res2 (vid(car l) (output (cdr l )))))
         ;( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
         (T (res (vid (car l)) '/\  (vid (cadr l))))))
-;
 (defun output_2 (l)
         (res (vid (car l)) '/\ (vid (car(cdr l)))))
 (defun output_1 (l)
         (res (vid (car(cdr(cdr l)))) '/\ (vid (car(cdr(cdr(cdr l)))))))
 
-(defun vid (l)  ;///
-  (cond
-        ((null l) nil)
-        ((null (cdr l)) (typec (car l)))
-        (T (append (typec (car l))
-                  (cond
-                      ((> (caadr l) 0) (cons '+ (vid (cdr l))))
-                      (T (cons '- (vid (cons (cons (- 0 (caadr l))
-                                                        (cdadr l))
-                                                        (cddr l))))))))))
 
-
-
-
-
-
-
-
+(defun vid (l)
+      (cond
+            ((null l) NIL)
+            ((null (cdr l)) (type_const (car l)))
+            (T (append (type_const (car l)) (provznak l)))))
+(defun provznak (l)
+        (cond
+            ((> (caadr l) 0) (cons '+ (vid (cdr l))))
+            (T (cons '- (vid (cons (cons (- 0 (caadr l)) (cdadr l)) (cddr l)))))))
 
 
 
@@ -54,25 +45,23 @@
         (print l1))
 
 
-(defun typec (l)
+(defun type_const (l)
         (cond
-              ((= 0 (cadr l)) (list (car l)))
-              (T (typex l))))
-
-(defun typex (l)
+              ((= 0 (car(cdr l))) (list (car l)))
+              (T (type_x l))))
+(defun type_x (l)
         (cond
-              ((= 1 (cadr l))
+              ((= 1 (car(cdr l)))
               (cond
                   ((= 1 (car l)) (list 'x))
                   ((= -1 (car l)) (list '- 'x))
                   (t (list (car l) 'x))))
-        (T (typecx l))))
-
-(defun typecx (l)
+        (T (type_cx l))))
+(defun type_cx (l)
         (cond
-          ((= 1 (car l)) (list 'x '^ (cadr l)))
-          ((= -1 (car l)) (list '- 'x '^ (cadr l)))
-          (t (list (car l) 'x '^ (cadr l)))))
+          ((= 1 (car l)) (list 'x '^ (car(cdr l))))
+          ((= -1 (car l)) (list '- 'x '^ (car(cdr l))))
+          (t (list (car l) 'x '^ (car(cdr l))))))
 
 
 
@@ -82,9 +71,9 @@
 
 
 
-;////////////treatment//////////////////////////////
+;////////////obrabotka//////////////////////////////
 
-(defun treatment (l)
+(defun obrabotka (l)
     (obsdelete (list
            (provzero(result
                           (append
@@ -92,6 +81,7 @@
                               (operation (car(cdr l)) (car(cdr(cdr l)))))))
            (provzero(result
                               (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
+
 
 (defun result (l) (varios l NIL NIL NIL))
 
@@ -101,17 +91,14 @@
               ((null l1) '())
               (T (append (provvir2 (car l1) l2)
                   (operation (cdr l1) l2)))))
-
 (defun provvir2 (l1 l2)
       (cond
             ((null l2) '())
             (T (cons (prosum l1 (car l2))
                      (provvir2 l1 (cdr l2))))))
-
 (defun prosum (l1 l2)
       (list (* (car l1) (car l2))
             (+ (car(cdr l1)) (car(cdr l2)))))
-
 
 
 (defun provzero (l)
@@ -125,16 +112,13 @@
       (cond
             ((null l) '())
             (T (cons (car(car l)) (getcar (cdr l))))))
-
 (defun getcdr (l)
       (cond
             ((null l) '())
             (T (cons (car(cdr(car l))) (getcdr (cdr l))))))
-
 (defun obsdelete (l) (output_full l)
   (output_full (sokrash l (list (apply 'gcd (getcar (append (car l) (car(cdr l)))))
                   (apply 'min (getcdr (append (car l) (car(cdr l)))))))))
-
 
 
 (defun sokrash (l d)
@@ -142,13 +126,11 @@
               ((null l) '())
               (T (cons (provvir (car l) d)
                   (sokrash (cdr l) d)))))
-
 (defun provvir (l d)
       (cond
             ((null l) '())
             (T (cons (prosedur (car l) d)
                      (provvir (cdr l) d)))))
-
 (defun prosedur (l d)
       (list (/ (car l) (car d))
             (- (car(cdr l)) (car(cdr d)))))
@@ -174,13 +156,6 @@
 
 
 
-(defun proverkanull (l)
-      (cond
-            ((= 0 (car(car(car l)))) (output_1 l))
-            ((= 0 (car(car(car(cdr(cdr l)))))) (output_2 l))
-            (T (treatment l))))
-
-
 
 
 
@@ -191,6 +166,13 @@
               (preobraz (car(cdr(cdr (list (take l1) '/ (drop l1))))))
               (preobraz (car (list (take l2) '/ (drop l2))))
               (preobraz (car(cdr(cdr (list (take l2) '/ (drop l2))))))))
+
+(defun proverkanull (l)
+      (cond
+            ((= 0 (car(car(car l)))) (output_1 l))
+            ((= 0 (car(car(car(cdr(cdr l)))))) (output_2 l))
+            (T (obrabotka l))))
+
 
 (defun take (l)
         (cond
@@ -326,4 +308,4 @@
 (main (print '(0 / 1)) (princ '+\ )
       (princ '( x / 2  )))
 
-;(trace provzero vid res res2 typec output input treatment sokrash obsdelete)
+;(trace provzero vid res res2 type_const output input obrabotka sokrash obsdelete)
