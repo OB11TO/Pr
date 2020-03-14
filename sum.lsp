@@ -15,7 +15,7 @@
         (res (vid (car l)) '/\ (vid (car(cdr l)))))
 (defun output_1 (l)
         (res (vid (car(cdr(cdr l)))) '/\ (vid (car(cdr(cdr(cdr l)))))))
-
+(defun output_3 (l) (print 0))
 
 (defun vid (l)
       (cond
@@ -157,6 +157,11 @@
               (preobraz (car(cdr(cdr (list (take l2) '/ (drop l2))))))))
 
 (defun proverkanull (l)
+        (cond
+            ((and (= 0 (car(car(car l)))) (= 0 (car(car(car(cdr(cdr l))))))) (output_3 l))
+            (T (proverkanull2 l))))
+
+(defun proverkanull2 (l)
       (cond
             ((= 0 (car(car(car l)))) (output_1 l))
             ((= 0 (car(car(car(cdr(cdr l)))))) (output_2 l))
@@ -296,5 +301,8 @@
 (print '(EXPRESION 22))
 (main (print '(0 / 1)) (princ '+\ )
       (princ '( x / 2  )))
+(print '(EXPRESION 23))
+(main (print '( 0 / (4 x ^ 2 + 10 x + 25))) (princ '+\ )
+      (princ '( 0 / (4 x ^ 2 - 10 x + 25))))
 
-;(trace provzero vid res res2 type_const output input obrabotka sokrash obsdelete)
+;(trace main input proverkanull take drop  preobraz types2 types types1 types3 types4 types5)
