@@ -2,15 +2,15 @@
 ;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
-;(trace vid input obrabotka)
+;(trace vid input obrabotka provznak output_full)
 
 (defun output_full (l)
     (cond
         ((null (car l)) (print 0))
         ((null (car(cdr l)))  (res2 (vid (car l))))
-        ;((= 1 (caaadr l)) (res2 (vid(car l) (output (cdr l )))))
-        ;( (and  ((= 1 (caaadr l)) (= 0 (cadr)))) (res2(vid(car l))))
-        (T (res (vid (car l)) '/\  (vid (cadr l))))))
+        ;((= 1 (car(car(car(cdr l))))) (res2 (vid(car l) (output (cdr l )))))
+        ;( (and  ((= 1 (car(car(car(car(cdr l))))))) (= 0 (car(cdr l))))) (res2(vid(car l))))
+        (T (res (vid (car l)) '/\  (vid (car(cdr l)))))))
 (defun output_2 (l)
         (res (vid (car l)) '/\ (vid (car(cdr l)))))
 (defun output_1 (l)
@@ -24,14 +24,12 @@
             (T (append (type_const (car l)) (provznak l)))))
 (defun provznak (l)
         (cond
-            ((> (caadr l) 0) (cons '+ (vid (cdr l))))
-            (T (cons '- (vid (cons (cons (- 0 (caadr l)) (cdadr l)) (cddr l)))))))
+            ((> (car(car(cdr l))) 0) (cons '+ (vid (cdr l))))
+            (T (cons '- (vid (cons (cons (- 0 (car(car(cdr l)))) (cdr(car(cdr l)))) (cdr(cdr l))))))))
 
 
 (defun res (l1 d l2)
-      (print l1)
-      (princ d)
-      (princ l2))
+      (print l1) (princ d) (princ l2))
 
 (defun res2 (l1)
         (print l1))
@@ -128,26 +126,25 @@
             (- (car(cdr l)) (car(cdr d)))))
 
 
-(defun varios (l auxiliary support control) ;/////
-    (cond
-          ((null l)
-    (cond
-          ((null control)
-            (cond
-               ((null auxiliary) support)
-               (T (cons auxiliary support))))
 
-          ((null auxiliary) (varios (cdr control) (car control) support NIL))
-          (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
+(defun varios (l auxiliary support  control)
+      (cond
+            ((null l) (varios1 l auxiliary support  control))
+            ((null auxiliary) (varios (cdr l) (car l) support control))
+            ((= (car(cdr(car l))) (car(cdr auxiliary))) (varios (cdr l)
+                (cons (+ (car auxiliary) (car(car l))) (cdr auxiliary)) support control))
+            (T (varios (cdr l) auxiliary support (cons (car l) control)))))
 
-       ((null auxiliary) (varios (cdr l) (car l) support control))
-            ((= (cadar l) (cadr auxiliary)) (varios (cdr l)
-             (cons (+ (car auxiliary) (caar l)) (cdr auxiliary)) support control))
+(defun varios1 (l auxiliary support  control)
+        (cond
+            ((null control) (varios2 l auxiliary support  control))
+            ((null auxiliary) (varios (cdr control) (car control) support NIL))
+       (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
 
-      (T (varios (cdr l) auxiliary support (cons (car l) control)))))
-
-
-
+(defun varios2 (l auxiliary support  control)
+        (cond
+            ((null auxiliary) support)
+            (T (cons auxiliary support))))
 
 
 
@@ -178,8 +175,8 @@
                 ((null l) NIL)
                 ((eq '/ (car l))
           (cond
-                ((atom (cadr l)) (cdr l))
-                (T (cadr l))))
+                ((atom (car(cdr l))) (cdr l))
+                (T (car(cdr l)))))
                 (T (drop (cdr l)))))
 
 (defun preobraz (l)
@@ -188,9 +185,9 @@
         ((atom l) (list (types (list l))))
         ((atom (car l)) (preobraz (cons (list (car l)) (cdr l))))
         ((null (cdr l)) (list (types (car l))))
-        ((eql '+ (cadr l)) (cons (types (car l)) (preobraz (cddr l))))
-        ((eql '- (cadr l)) (cons (types (car l)) (preobraz (cdr l))))
-        (T (preobraz (cons (append (car l) (list (cadr l))) (cddr l))))))
+        ((eql '+ (car(cdr l))) (cons (types (car l)) (preobraz (cdr(cdr l)))))
+        ((eql '- (car(cdr l))) (cons (types (car l)) (preobraz (cdr l))))
+        (T (preobraz (cons (append (car l) (list (car(cdr l)))) (cdr(cdr l)))))))
 
 
 (defun types (l)
