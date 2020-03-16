@@ -2,8 +2,6 @@
 ;sudo chmod +x sum.lsp
 ;////////////////////ouitput///////////////////
 
-;(trace vid input obrabotka provznak output_full)
-
 (defun output_full (l)
     (cond
         ((null (car l)) (print 0))
@@ -130,10 +128,8 @@
 (defun varios (l first_l two_l  three_l)
       (cond
             ((null l) (varios1 l first_l two_l  three_l))
-
             ((null first_l) (varios (cdr l) (car l) two_l three_l))
             ((= (car(cdr(car l))) (car(cdr first_l))) (varios_oper l first_l two_l  three_l))
-
             (T (varios (cdr l) first_l two_l (cons (car l) three_l)))))
 
 (defun varios_oper (l first_l two_l  three_l)
@@ -143,7 +139,7 @@
         (cond
             ((null three_l) (varios2 l first_l two_l  three_l))
             ((null first_l) (varios (cdr three_l) (car three_l) two_l NIL))
-       (T (varios (cdr three_l) (car three_l) (cons first_l two_l) NIL))))
+            (T (varios (cdr three_l) (car three_l) (cons first_l two_l) NIL))))
 
 (defun varios2 (l first_l two_l  three_l)
         (cond
