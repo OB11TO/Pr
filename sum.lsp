@@ -96,7 +96,7 @@
         ((null l) NIL)
         ((= (car(car l)) 0) (provzero(result (cdr l))))
         (T (cons (car l) (provzero(result (cdr l)))))))
-;///////////////varios
+
 
 (defun getcar (l)
       (cond
@@ -127,24 +127,28 @@
 
 
 
-(defun varios (l auxiliary support  control)
+(defun varios (l first_l two_l  three_l)
       (cond
-            ((null l) (varios1 l auxiliary support  control))
-            ((null auxiliary) (varios (cdr l) (car l) support control))
-            ((= (car(cdr(car l))) (car(cdr auxiliary))) (varios (cdr l)
-                (cons (+ (car auxiliary) (car(car l))) (cdr auxiliary)) support control))
-            (T (varios (cdr l) auxiliary support (cons (car l) control)))))
+            ((null l) (varios1 l first_l two_l  three_l))
 
-(defun varios1 (l auxiliary support  control)
-        (cond
-            ((null control) (varios2 l auxiliary support  control))
-            ((null auxiliary) (varios (cdr control) (car control) support NIL))
-       (T (varios (cdr control) (car control) (cons auxiliary support) NIL))))
+            ((null first_l) (varios (cdr l) (car l) two_l three_l))
+            ((= (car(cdr(car l))) (car(cdr first_l))) (varios_oper l first_l two_l  three_l))
 
-(defun varios2 (l auxiliary support  control)
+            (T (varios (cdr l) first_l two_l (cons (car l) three_l)))))
+
+(defun varios_oper (l first_l two_l  three_l)
+      (varios (cdr l) (cons (+ (car first_l) (car(car l))) (cdr first_l)) two_l three_l))
+
+(defun varios1 (l first_l two_l  three_l)
         (cond
-            ((null auxiliary) support)
-            (T (cons auxiliary support))))
+            ((null three_l) (varios2 l first_l two_l  three_l))
+            ((null first_l) (varios (cdr three_l) (car three_l) two_l NIL))
+       (T (varios (cdr three_l) (car three_l) (cons first_l two_l) NIL))))
+
+(defun varios2 (l first_l two_l  three_l)
+        (cond
+            ((null first_l) two_l)
+            (T (cons first_l two_l))))
 
 
 
