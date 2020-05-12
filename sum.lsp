@@ -5,7 +5,7 @@
 
 (defun output_full (l)
     (cond
-        ((null (car l)) (print 0))
+        ((null (car l)) (print 0))        ;???
         ((null (car(cdr l)))  (res2 (vid (car l))))
         ;((= 1 (car(car(car(cdr l))))) (res2 (vid(car l) (output (cdr l )))))
         ;( (and  ((= 1 (car(car(car(car(cdr l))))))) (= 0 (car(cdr l))))) (res2(vid(car l))))
@@ -24,7 +24,8 @@
 (defun provznak (l)
         (cond
             ((> (car(car(cdr l))) 0) (cons '+ (vid (cdr l))))
-            (T (cons '- (vid (cons (cons (- 0 (car(car(cdr l)))) (cdr(car(cdr l)))) (cdr(cdr l))))))))
+            (T (cons '- (vid (cons (cons (- 0 (car(car(cdr l)))) (cdr(car(cdr l)))) (cdr(cdr l))))))))   ;(PROVZNAK '((2 2) (-15 0) (-39 1)))  (VID '((15 0) (-39 1)))
+
 
 
 (defun res (l1 d l2)
@@ -36,21 +37,21 @@
 
 (defun type_const (l)
         (cond
-              ((= 0 (car(cdr l))) (list (car l)))
+              ((= 0 (car(cdr l))) (list (car l)))  ;const
               (T (type_x l))))
 (defun type_x (l)
         (cond
-              ((= 1 (car(cdr l)))
+              ((= 1 (car(cdr l))) ;x
               (cond
-                  ((= 1 (car l)) (list 'x))
-                  ((= -1 (car l)) (list '- 'x))
-                  (t (list (car l) 'x))))
+                  ((= 1 (car l)) (list 'x))  ;x
+                  ((= -1 (car l)) (list '- 'x)); -x
+                  (t (list (car l) 'x))))  ;cx
         (T (type_cx l))))
 (defun type_cx (l)
         (cond
-          ((= 1 (car l)) (list 'x '^ (car(cdr l))))
-          ((= -1 (car l)) (list '- 'x '^ (car(cdr l))))
-          (t (list (car l) 'x '^ (car(cdr l))))))
+          ((= 1 (car l)) (list 'x '^ (car(cdr l))))  ;x^c
+          ((= -1 (car l)) (list '- 'x '^ (car(cdr l)))) ;-x^1
+          (t (list (car l) 'x '^ (car(cdr l))))))  ;cx^2
 
 
 
@@ -284,3 +285,4 @@
 
 
 ;(trace main input proverkanull  provzero proverkanull2 take drop  preobraz types2 types types1 types3 types4 types5)
+;(trace output_full  output_1 output_2 output_3 vid res  provznak res2 type_const type_x type_cx)
