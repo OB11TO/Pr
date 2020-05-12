@@ -188,10 +188,10 @@
 (defun preobraz (l)
     (cond
         ((null l) NIL)
-        ((atom l) (list (types (list l))))
-        ((atom (car l)) (preobraz (cons (list (car l)) (cdr l))))
+        ((atom l) (list (types (list l))))                                  ;(PREOBRAZ '(2)) (PREOBRAZ '((2)))
+        ((atom (car l)) (preobraz (cons (list (car l)) (cdr l))))          ;(PREOBRAZ '(15 - 3 X))  Trace: (PREOBRAZ '((15) - 3 X))
         ((null (cdr l)) (list (types (car l))))
-        ((eql '+ (car(cdr l))) (cons (types (car l)) (preobraz (cdr(cdr l)))))
+        ((eql '+ (car(cdr l))) (cons (types (car l)) (preobraz (cdr(cdr l)))))     ;(PREOBRAZ '(123 + 150 - 3)) (PREOBRAZ '((123) + 150 - 3))
         ((eql '- (car(cdr l))) (cons (types (car l)) (preobraz (cdr l))))
         (T (preobraz (cons (append (car l) (list (car(cdr l)))) (cdr(cdr l)))))))
 
@@ -199,7 +199,7 @@
 (defun types (l)
       (cond
             ((null l) NIL)
-            ((eql '+ (car l)) (types (cdr l)))
+            ((eql '+ (car l)) (types (cdr l)))  ;???
             ((null (cdr l)) (types1 l))
             ((null (cdr(cdr l))) (types2 l))
             ((null (cdr(cdr(cdr l)))) (types3 l))
@@ -283,4 +283,4 @@
       (princ '(2 / 2 )))
 
 
-;(trace main input proverkanull take drop  preobraz types2 types types1 types3 types4 types5)
+;(trace main input proverkanull  provzero proverkanull2 take drop  preobraz types2 types types1 types3 types4 types5)
