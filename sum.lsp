@@ -5,8 +5,8 @@
 
 (defun output_full (l)
     (cond
-        ((null (car l)) (print 0))        ;???
-        ((null (car(cdr l)))  (res2 (vid (car l))))
+        ((null (car l)) (print 0))
+        ;((= 1 (car(cdr l)))  (res2 (vid (car l))))
         ;((= 1 (car(car(car(cdr l))))) (res2 (vid(car l) (output (cdr l )))))
         ;( (and  ((= 1 (car(car(car(car(cdr l))))))) (= 0 (car(cdr l))))) (res2(vid(car l))))
         (T (res (vid (car l)) '/\  (vid (car(cdr l)))))))
@@ -41,7 +41,7 @@
               (T (type_x l))))
 (defun type_x (l)
         (cond
-              ((= 1 (car(cdr l))) ;x
+              ((= 1 (car(cdr l)))
               (cond
                   ((= 1 (car l)) (list 'x))  ;x
                   ((= -1 (car l)) (list '- 'x)); -x
@@ -60,7 +60,6 @@
 
 
 
-
 ;////////////obrabotka//////////////////////////////
 
 (defun obrabotka (l)
@@ -71,9 +70,6 @@
                               (operation (car(cdr l)) (car(cdr(cdr l)))))))
            (provzero(result
                               (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
-
-
-(defun result (l) (varios l NIL NIL NIL))
 
 
 (defun operation (l1 l2)
@@ -108,7 +104,7 @@
             (T (cons (car(cdr(car l))) (getcdr (cdr l))))))
 (defun obsdelete (l) (output_full l)
   (output_full (sokrash l (list (apply 'gcd (getcar (append (car l) (car(cdr l)))))
-                  (apply 'min (getcdr (append (car l) (car(cdr l)))))))))
+                                (apply 'min (getcdr (append (car l) (car(cdr l)))))))))
 
 
 (defun sokrash (l d)
@@ -125,7 +121,7 @@
       (list (/ (car l) (car d))
             (- (car(cdr l)) (car(cdr d)))))
 
-
+(defun result (l) (varios l NIL NIL NIL))
 
 (defun varios (l first_l two_l  three_l)
       (cond
@@ -286,3 +282,6 @@
 
 ;(trace main input proverkanull  provzero proverkanull2 take drop  preobraz types2 types types1 types3 types4 types5)
 ;(trace output_full  output_1 output_2 output_3 vid res  provznak res2 type_const type_x type_cx)
+;(trace output_full obrabotka result  varios varios_oper varios1 varios2 prosedur provvir operation provvir2 prosum provzero getcar getcdr obsdelete sokrash)
+
+;(trace main input proverkanull  provzero proverkanull2 take drop  preobraz types2 types types1 types3 types4 types5 output_full  output_1 output_2 output_3 vid res  provznak res2 type_const type_x type_cx obrabotka result  varios varios_oper varios1 varios2 prosedur provvir operation provvir2 prosum provzero getcar getcdr obsdelete sokrash)
