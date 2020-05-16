@@ -70,7 +70,11 @@
                               (operation (car(cdr l)) (car(cdr(cdr l)))))))
            (provzero(result
                               (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
-
+(defun obrabotka2 (l)
+      (obsdelete (list(provzero (result
+                                (operation(car l) (car(cdr(cdr l))))))
+                 (result(provzero
+                                (operation (car(cdr l)) (car(cdr(cdr(cdr l))))))))))
 
 (defun operation (l1 l2)
         (cond
@@ -154,6 +158,7 @@
               (preobraz (car (list (take l2) '/ (drop l2))))
               (preobraz (car(cdr(cdr (list (take l2) '/ (drop l2))))))))
 
+
 (defun proverkanull (l)
         (cond
             ((and (= 0 (car(car(car l)))) (= 0 (car(car(car(cdr(cdr l))))))) (output_3 l))
@@ -229,54 +234,62 @@
 (defun types5 (l)
           (cons (- 0 (car(cdr l))) (cdr(cdr(cdr(cdr l)))))) ;- const x ^ const
 
+(defun main2 (l1 d l2)
+        (proverkanull (input l1 d l2)))
 
+(defun fil (l1 acc)
+          (cond
+                ((null l1) acc)
+                ((equal '/ (car l1)) (list acc '/ (cdr l1)))
+                (T (fil (cdr l1) (append acc (list (car l1)))))))
 
 (defun main (l1 d l2)
          (proverkanull (input l1 d l2)))
 
+;(trace main input proverkanull  provzero proverkanull2 take drop  preobraz types2 types types1 types3 types4 types5 output_full  output_1 output_2 output_3 vid res  provznak res2 type_const type_x type_cx obrabotka result  varios varios_oper varios1 varios2 prosedur provvir operation provvir2 prosum provzero getcar getcdr obsdelete sokrash)
 (print '(EXPRESION 1))
-(main (print '((15 - 3 X) / (X  + 3 ))) (princ '+\ )
-      (princ '((2 X ^ 1 - 30 ) / ( 5 ))))
+(main  (fil '(10 x / 3 x) '() ) '+
+        (fil '( 9 / 5 ) '() ))
 (print '(EXPRESION 2))
-(main (print '((690 + x ^ 8 - 14 x ^ 12) / (- 25  - x ^ 21 )))
+(main2 (print '((690 + x ^ 8 - 14 x ^ 12) / (- 25  - x ^ 21 )))
       (princ '+\ ) (princ '((12 x ^ 10) / (-15 + X ^ 2))))
 (print '(EXPRESION 3))
-(main (print '(2 / 9)) (princ '+\ ) (princ '(-2 / 9)))
+(main2 (print '(2 / 9)) (princ '+\ ) (princ '(-2 / 9)))
 (print '(EXPRESION 4))
-(main (print '((x ^ 1 + 3) / (x - 1))) (princ '+\ )
+(main2 (print '((x ^ 1 + 3) / (x - 1))) (princ '+\ )
       (princ '((x ^ 1) / (x - 2))))
 (print '(EXPRESION 5))
-(main (print '(x ^ 2 / 6)) (princ '+\ )
+(main2 (print '(x ^ 2 / 6)) (princ '+\ )
       (princ '((-2 x ^ 2) / 12)))
 (print '(EXPRESION 6))
-(main (print '(1  / (9 x ))) (princ '+\ )
+(main2 (print '(1  / (9 x ))) (princ '+\ )
       (princ '((2 ) / (16 x))))
 (print '(EXPRESION 7))
-(main (print '((x ^ 2 + 2 x) / 3)) (princ '+\ )
+(main2 (print '((x ^ 2 + 2 x) / 3)) (princ '+\ )
       (princ '((- x ^ 2 - 2 x + 1) / 3)))
 (print '(EXPRESION 8))
-(main (print '((4 x ^ 2 + 25) / (8 x ^ 2 + 15))) (princ '+\ )
+(main2 (print '((4 x ^ 2 + 25) / (8 x ^ 2 + 15))) (princ '+\ )
       (princ '((- 4 x ^ 2 + 25) / (8  x ^ 2 - 15))))
 (print '(EXPRESION 9))
-(main (print '((2 x - 1) / (x + 2))) (princ '+\ )
+(main2 (print '((2 x - 1) / (x + 2))) (princ '+\ )
       (princ '((2 x + 1) / (x - 2))))
 (print '(EXPRESION 10))
-(main (print '( 0 / (4 x ^ 2 + 10 x + 25))) (princ '+\ )
+(main2 (print '( 0 / (4 x ^ 2 + 10 x + 25))) (princ '+\ )
       (princ '( 0 / (4 x ^ 2 - 10 x + 25))))
 (print '(EXPRESION 11))
-(main (print '(0 / 1)) (princ '+\ )
+(main2 (print '(0 / 1)) (princ '+\ )
       (princ '( x / 2  )))
 (print '(EXPRESION 12))
-(main (print '(15 - 3 x / 1)) (princ '+\ )
+(main2 (print '(15 - 3 x / 1)) (princ '+\ )
       (princ '( 0 / 2  )))
 (print '(EXPRESION 13))
-(main (print '((123 + 150 - 3 ) / (2 X ^ 3 ))) (princ '+\ )
+(main2 (print '((123 + 150 - 3 ) / (2 X ^ 3 ))) (princ '+\ )
       (princ '((X ^ 5 - 3 x ^ 4 ) / ( X ^ 3 - 2))))
 (print '(EXPRESION 14))
-(main (print '(7 + 15 - 3 x / x)) (princ '+\ )
+(main2 (print '(7 + 15 - 3 x / x)) (princ '+\ )
       (princ '(x / 5 x ^ 8)))
 (print '(EXPRESION 15))
-(main (print '(7 + 15 - 3 x / 1)) (princ '+\ )
+(main2 (print '(7 + 15 - 3 x / 1)) (princ '+\ )
       (princ '(2 / 2 )))
 
 
